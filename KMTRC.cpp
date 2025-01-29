@@ -1,32 +1,32 @@
-#include "KMOneCore.h"
+#include "KMTRC.h"
 
 PCA9685 pwmControl;
-KMOneCore_PCA9555 io_expand(0x20);
+KMTRC_PCA9555 io_expand(0x20);
 
 // create an instance of the Stepper class, specifying
 // the number of steps of the motor and the pins it's
 // attached to
-KMOneCore_Stepper stepper1(STEPS, 13, 12, 14, 15); // stepper phases for our nema17 steppermotor and new move function
-KMOneCore_Stepper stepper2(STEPS, 9, 8, 11, 10);   // stepper phases for our nema17 steppermotor and new move function
+KMTRC_Stepper stepper1(STEPS, 13, 12, 14, 15); // stepper phases for our nema17 steppermotor and new move function
+KMTRC_Stepper stepper2(STEPS, 9, 8, 11, 10);   // stepper phases for our nema17 steppermotor and new move function
 
 ESP32Encoder encoder;
 ESP32Encoder encoder2;
 ESP32Encoder encoder3;
 ESP32Encoder encoder4;
 
-KMOneCore_Ultrasonic uSonic1(USTRIGPIN, USEHOPIN);
-KMOneCore_Ultrasonic uSonic2(US2TRIGPIN, US2EHOPIN);
+KMTRC_Ultrasonic uSonic1(USTRIGPIN, USEHOPIN);
+KMTRC_Ultrasonic uSonic2(US2TRIGPIN, US2EHOPIN);
 
-KMOneCore::KMOneCore(/* args */)
+KMTRC::KMTRC(/* args */)
 {
   // Может тут всё и инициализировать из begin() ???
 }
 
-KMOneCore::~KMOneCore()
+KMTRC::~KMTRC()
 {
 }
 
-void KMOneCore::begin(void)
+void KMTRC::begin(void)
 {
   Serial.begin(115200);
   while (!Serial)
@@ -72,7 +72,7 @@ void KMOneCore::begin(void)
 
 //------------------------------------------------DC_Motors-------------------------------------------------------------------------------------------------
 
-void KMOneCore::moveWheel(uint8_t motor, int v)
+void KMTRC::moveWheel(uint8_t motor, int v)
 {
   // Ораничение скорости движения
   if (v > 100)
@@ -96,14 +96,14 @@ void KMOneCore::moveWheel(uint8_t motor, int v)
   Serial.println("Motor move");
 }
 
-void KMOneCore::DC_Motor(uint8_t num, uint8_t speed, uint8_t action)
+void KMTRC::DC_Motor(uint8_t num, uint8_t speed, uint8_t action)
 {
   setMotorSpeed(num, speed); // Задаем скорость (1-255)
   runMotor(num, action);     // Запустаем вращение вперед
   Serial.println("Run");
 }
 
-void KMOneCore::setMotorSpeed(uint8_t num, uint8_t speed)
+void KMTRC::setMotorSpeed(uint8_t num, uint8_t speed)
 {
   // pwmControl.setPWMFrequency(1500.0f);
   switch (num)
@@ -132,7 +132,7 @@ void KMOneCore::setMotorSpeed(uint8_t num, uint8_t speed)
   //  Serial.println(PWMpin);
 }
 
-void KMOneCore::runMotor(uint8_t num, uint8_t cmd)
+void KMTRC::runMotor(uint8_t num, uint8_t cmd)
 {
   if (num == 4)
   {
@@ -192,7 +192,7 @@ void KMOneCore::runMotor(uint8_t num, uint8_t cmd)
 
 //-------------------------------------- Mecanum Wheels move functions-------------------------------------------------------------------------------------------------
 
-void KMOneCore::mecanumWheelsDrive(uint8_t speed, uint8_t direction)
+void KMTRC::mecanumWheelsDrive(uint8_t speed, uint8_t direction)
 {
   switch (direction)
   {
@@ -201,7 +201,7 @@ void KMOneCore::mecanumWheelsDrive(uint8_t speed, uint8_t direction)
     break;
   }
 }
-void KMOneCore::mecanumMoveForward(uint8_t speed)
+void KMTRC::mecanumMoveForward(uint8_t speed)
 {
   // digitalWrite(RightFrontFWD, HIGH);
   // digitalWrite(RightFrontBWD, LOW);
@@ -220,7 +220,7 @@ void KMOneCore::mecanumMoveForward(uint8_t speed)
   DC_Motor(3, speed, FORWARD);
 }
 
-void KMOneCore::mecanumMoveBackward(uint8_t speed)
+void KMTRC::mecanumMoveBackward(uint8_t speed)
 {
   // digitalWrite(RightFrontFWD, LOW);
   // digitalWrite(RightFrontBWD, HIGH);
@@ -239,7 +239,7 @@ void KMOneCore::mecanumMoveBackward(uint8_t speed)
   DC_Motor(3, speed, BACKWARD);
 }
 
-void KMOneCore::mecanumrotateRight(uint8_t speed)
+void KMTRC::mecanumrotateRight(uint8_t speed)
 {
   // digitalWrite(RightFrontFWD, LOW);
   // digitalWrite(RightFrontBWD, HIGH);
@@ -258,7 +258,7 @@ void KMOneCore::mecanumrotateRight(uint8_t speed)
   DC_Motor(3, speed, FORWARD);
 }
 
-void KMOneCore::mecanumrotateLeft(uint8_t speed)
+void KMTRC::mecanumrotateLeft(uint8_t speed)
 {
   // digitalWrite(RightFrontFWD, HIGH);
   // digitalWrite(RightFrontBWD, LOW);
@@ -277,7 +277,7 @@ void KMOneCore::mecanumrotateLeft(uint8_t speed)
   DC_Motor(3, speed, BACKWARD);
 }
 
-void KMOneCore::mecanumMoveSidewaysRight(uint8_t speed)
+void KMTRC::mecanumMoveSidewaysRight(uint8_t speed)
 {
   // digitalWrite(RightFrontFWD, LOW);
   // digitalWrite(RightFrontBWD, HIGH);
@@ -296,7 +296,7 @@ void KMOneCore::mecanumMoveSidewaysRight(uint8_t speed)
   DC_Motor(3, speed, BACKWARD);
 }
 
-void KMOneCore::mecanumMoveSidewaysLeft(uint8_t speed)
+void KMTRC::mecanumMoveSidewaysLeft(uint8_t speed)
 {
   // digitalWrite(RightFrontFWD, HIGH);
   // digitalWrite(RightFrontBWD, LOW);
@@ -315,7 +315,7 @@ void KMOneCore::mecanumMoveSidewaysLeft(uint8_t speed)
   DC_Motor(3, speed, FORWARD);
 }
 
-void KMOneCore::mecanumMoveRightForward(uint8_t speed)
+void KMTRC::mecanumMoveRightForward(uint8_t speed)
 {
   // digitalWrite(RightFrontFWD, LOW);
   // digitalWrite(RightFrontBWD, LOW);
@@ -334,7 +334,7 @@ void KMOneCore::mecanumMoveRightForward(uint8_t speed)
   DC_Motor(3, speed, RELEASE);
 }
 
-void KMOneCore::mecanumMoveLeftForward(uint8_t speed)
+void KMTRC::mecanumMoveLeftForward(uint8_t speed)
 {
   // digitalWrite(RightFrontFWD, HIGH);
   // digitalWrite(RightFrontBWD, LOW);
@@ -353,7 +353,7 @@ void KMOneCore::mecanumMoveLeftForward(uint8_t speed)
   DC_Motor(3, speed, FORWARD);
 }
 
-void KMOneCore::mecanumStopMoving(uint8_t speed)
+void KMTRC::mecanumStopMoving(uint8_t speed)
 {
   // digitalWrite(RightFrontFWD, LOW);
   // digitalWrite(RightFrontBWD, LOW);
@@ -374,7 +374,7 @@ void KMOneCore::mecanumStopMoving(uint8_t speed)
 
 //----------------------------------------------Analog Servos-------------------------------------------------------------------------------------------------
 
-void KMOneCore::setAnalogServoAngle(uint8_t num, uint8_t angle)
+void KMTRC::setAnalogServoAngle(uint8_t num, uint8_t angle)
 {
   //  pwmControl.setPWMFrequency(50.0f);
   //  PCA9685_ServoEvaluator pwmServo1;
@@ -421,7 +421,7 @@ void KMOneCore::setAnalogServoAngle(uint8_t num, uint8_t angle)
 
 //------------------------------------------------Steppers-------------------------------------------------------------------------------------------------
 
-// void KMOneCore::setStepper(int stepper_num, int stepper_speed, int steps)
+// void KMTRC::setStepper(int stepper_num, int stepper_speed, int steps)
 // {
 //   if (stepper_num == 1)
 //   {
@@ -435,7 +435,7 @@ void KMOneCore::setAnalogServoAngle(uint8_t num, uint8_t angle)
 //   }
 // }
 
-void KMOneCore::setStepperSpeed(int stepper_num, int stepper_speed)
+void KMTRC::setStepperSpeed(int stepper_num, int stepper_speed)
 {
   if (stepper_num == 1)
   {
@@ -447,7 +447,7 @@ void KMOneCore::setStepperSpeed(int stepper_num, int stepper_speed)
   }
 }
 
-void KMOneCore::setStepperStep(int stepper_num, int steps)
+void KMTRC::setStepperStep(int stepper_num, int steps)
 {
   if (stepper_num == 1)
   {
@@ -463,7 +463,7 @@ void KMOneCore::setStepperStep(int stepper_num, int steps)
  *   constructor for four-pin version
  *   Sets which wires should control the motor.
  */
-KMOneCore_Stepper::KMOneCore_Stepper(int number_of_steps, int motor_pin_1, int motor_pin_2,
+KMTRC_Stepper::KMTRC_Stepper(int number_of_steps, int motor_pin_1, int motor_pin_2,
                                                int motor_pin_3, int motor_pin_4)
 {
   this->step_number = 0;                   // which step the motor is on
@@ -478,14 +478,14 @@ KMOneCore_Stepper::KMOneCore_Stepper(int number_of_steps, int motor_pin_1, int m
   this->motor_pin_4 = motor_pin_4; // Фаза D
 }
 
-KMOneCore_Stepper::~KMOneCore_Stepper()
+KMTRC_Stepper::~KMTRC_Stepper()
 {
 }
 
 /*
  * Sets the speed in revs per minute
  */
-void KMOneCore_Stepper::setStepperSpeed(long whatSpeed)
+void KMTRC_Stepper::setStepperSpeed(long whatSpeed)
 {
   this->step_delay = 60L * 1000L * 1000L / this->number_of_steps / whatSpeed;
 }
@@ -494,7 +494,7 @@ void KMOneCore_Stepper::setStepperSpeed(long whatSpeed)
  * Moves the motor steps_to_move steps.  If the number is negative,
  * the motor moves in the reverse direction.
  */
-void KMOneCore_Stepper::stepperStep(int steps_to_move)
+void KMTRC_Stepper::stepperStep(int steps_to_move)
 {
   int steps_left = abs(steps_to_move); // how many steps to take
 
@@ -551,7 +551,7 @@ void KMOneCore_Stepper::stepperStep(int steps_to_move)
 /*
  * Moves the motor forward or backwards.
  */
-// void KMOneCore_Stepper::stepMotor(int thisStep)
+// void KMTRC_Stepper::stepMotor(int thisStep)
 // {
 //   switch (thisStep)
 //   {
@@ -584,7 +584,7 @@ void KMOneCore_Stepper::stepperStep(int steps_to_move)
 // }
 
 // Alternate stepper motor function for our nema17 stepper motor
-void KMOneCore_Stepper::stepMotorALT(int thisStep)
+void KMTRC_Stepper::stepMotorALT(int thisStep)
 {
   switch (thisStep)
   {
@@ -618,7 +618,7 @@ void KMOneCore_Stepper::stepMotorALT(int thisStep)
 
 //------------------------------------------------Encoder-------------------------------------------------------------------------------------------------
 
-void KMOneCore::encoderSetup(uint8_t num)
+void KMTRC::encoderSetup(uint8_t num)
 {
   switch (num)
   {
@@ -641,7 +641,7 @@ void KMOneCore::encoderSetup(uint8_t num)
   }
 }
 
-long KMOneCore::encPosition(uint8_t num)
+long KMTRC::encPosition(uint8_t num)
 {
   long encPos = 0;
   switch (num)
@@ -666,7 +666,7 @@ long KMOneCore::encPosition(uint8_t num)
   return encPos;
 }
 
-void KMOneCore::clearEncoderData(uint8_t num)
+void KMTRC::clearEncoderData(uint8_t num)
 {
   switch (num)
   {
@@ -965,7 +965,7 @@ void ESP32Encoder::setFilter(uint16_t value)
 
 //---------------------------------------------------------------------------------------------------------------------------------------------
 
-int KMOneCore::ADCRead(uint8_t pin)
+int KMTRC::ADCRead(uint8_t pin)
 {
   switch (pin)
   {
@@ -980,7 +980,7 @@ int KMOneCore::ADCRead(uint8_t pin)
   }
 }
 
-int KMOneCore::DIORead(uint8_t pin)
+int KMTRC::DIORead(uint8_t pin)
 {
   switch (pin)
   {
@@ -995,12 +995,12 @@ int KMOneCore::DIORead(uint8_t pin)
   }
 }
 
-void KMOneCore::setLedDIO4(uint8_t freq)
+void KMTRC::setLedDIO4(uint8_t freq)
 {
   setPWM(13, freq);
 }
 
-bool KMOneCore::ReadButton(uint8_t num)
+bool KMTRC::ReadButton(uint8_t num)
 {
   bool buttonStatus = false;
 
@@ -1013,32 +1013,32 @@ bool KMOneCore::ReadButton(uint8_t num)
   return buttonStatus;
 }
 
-unsigned int KMOneCore::distUltrasonic1(void)
+unsigned int KMTRC::distUltrasonic1(void)
 {
   unsigned int usDist = 0;
   usDist = uSonic1.read(CM);
   return usDist;
 }
 
-unsigned int KMOneCore::distUltrasonic2(void)
+unsigned int KMTRC::distUltrasonic2(void)
 {
   unsigned int usDist = 0;
   usDist = uSonic2.read(CM);
   return usDist;
 }
 
-void KMOneCore::setBuzzer(uint32_t freq, long duration)
+void KMTRC::setBuzzer(uint32_t freq, long duration)
 {
   tone(15, freq, duration);
 }
 
-void KMOneCore::readAccelGyroSensor(uint8_t port)
+void KMTRC::readAccelGyroSensor(uint8_t port)
 {
 }
 
 //-------------------------------------------IO_Expander functions--------------------------------------------------------------------
 
-void KMOneCore::setPin(uint8_t pin, bool value)
+void KMTRC::setPin(uint8_t pin, bool value)
 {
   if (value == LOW)
   {
@@ -1064,7 +1064,7 @@ void KMOneCore::setPin(uint8_t pin, bool value)
   }
 }
 
-KMOneCore_PCA9555::KMOneCore_PCA9555(uint8_t address, int interruptPin)
+KMTRC_PCA9555::KMTRC_PCA9555(uint8_t address, int interruptPin)
 {
   _address = address; // save the address id
   _valueRegister = 0;
@@ -1082,7 +1082,7 @@ KMOneCore_PCA9555::KMOneCore_PCA9555(uint8_t address, int interruptPin)
 }
 
 // Checks if PCA9555 is responsive. Refer to Wire.endTransmission() from Arduino for details.
-bool KMOneCore_PCA9555::begin()
+bool KMTRC_PCA9555::begin()
 {
   Wire.beginTransmission(_address);
   Wire.write(0x02); // Test Address
@@ -1104,7 +1104,7 @@ bool KMOneCore_PCA9555::begin()
  * @param IOMode    mode of pin INPUT or OUTPUT
  * sets the mode of this IO pin
  */
-void KMOneCore_PCA9555::pinMode(uint8_t pin, uint8_t IOMode)
+void KMTRC_PCA9555::pinMode(uint8_t pin, uint8_t IOMode)
 {
 
   //
@@ -1144,7 +1144,7 @@ void KMOneCore_PCA9555::pinMode(uint8_t pin, uint8_t IOMode)
  * @return value of pin
  * Reads the selected pin.
  */
-uint8_t KMOneCore_PCA9555::digitalRead(uint8_t pin)
+uint8_t KMTRC_PCA9555::digitalRead(uint8_t pin)
 {
   uint16_t _inputData = 0;
   //
@@ -1170,7 +1170,7 @@ uint8_t KMOneCore_PCA9555::digitalRead(uint8_t pin)
   }
 }
 
-void KMOneCore_PCA9555::digitalWrite(uint8_t pin, uint8_t value)
+void KMTRC_PCA9555::digitalWrite(uint8_t pin, uint8_t value)
 {
   //
   // check valid pin first
@@ -1203,7 +1203,7 @@ void KMOneCore_PCA9555::digitalWrite(uint8_t pin, uint8_t value)
 }
 
 // Returns to user the state of desired pin
-uint8_t KMOneCore_PCA9555::stateOfPin(uint8_t pin)
+uint8_t KMTRC_PCA9555::stateOfPin(uint8_t pin)
 {
   if ((_stateOfPins & (1 << pin)) > 0)
   {
@@ -1228,7 +1228,7 @@ uint8_t KMOneCore_PCA9555::stateOfPin(uint8_t pin)
  * error codes : \n
  * 256 = either 0 or more than one byte is received from the chip
  */
-uint16_t KMOneCore_PCA9555::I2CGetValue(uint8_t address, uint8_t reg)
+uint16_t KMTRC_PCA9555::I2CGetValue(uint8_t address, uint8_t reg)
 {
   uint16_t _inputData;
   //
@@ -1261,7 +1261,7 @@ uint16_t KMOneCore_PCA9555::I2CGetValue(uint8_t address, uint8_t reg)
  * @param value    value to write to register
  * Write the value given to the register set to selected chip.
  */
-void KMOneCore_PCA9555::I2CSetValue(uint8_t address, uint8_t reg, uint8_t value)
+void KMTRC_PCA9555::I2CSetValue(uint8_t address, uint8_t reg, uint8_t value)
 {
   //
   // write output register to chip
@@ -1274,7 +1274,7 @@ void KMOneCore_PCA9555::I2CSetValue(uint8_t address, uint8_t reg, uint8_t value)
 
 //-------------------------------------------PWM_Controller functions--------------------------------------
 
-void KMOneCore::setPWM(uint8_t pin, uint16_t value)
+void KMTRC::setPWM(uint8_t pin, uint16_t value)
 {
   if (value > 4095)
   {
@@ -2174,7 +2174,7 @@ uint16_t PCA9685_ServoEvaluator::pwmForAngle(float angle)
 
 //--------------------------------------------Ultrasonic functions------------------------------------------
 
-KMOneCore_Ultrasonic::KMOneCore_Ultrasonic(uint8_t trigPin, uint8_t echoPin, unsigned long timeOut)
+KMTRC_Ultrasonic::KMTRC_Ultrasonic(uint8_t trigPin, uint8_t echoPin, unsigned long timeOut)
 {
   trig = trigPin;
   echo = echoPin;
@@ -2186,7 +2186,7 @@ KMOneCore_Ultrasonic::KMOneCore_Ultrasonic(uint8_t trigPin, uint8_t echoPin, uns
   timeout = timeOut;
 }
 
-unsigned int KMOneCore_Ultrasonic::timing()
+unsigned int KMTRC_Ultrasonic::timing()
 {
   unsigned int maxTime = 0;
 
@@ -2236,7 +2236,7 @@ unsigned int KMOneCore_Ultrasonic::timing()
  * sby default, it will return the distance in centimeters.
  * To change the default, replace CM by INC.
  */
-unsigned int KMOneCore_Ultrasonic::read(uint8_t und)
+unsigned int KMTRC_Ultrasonic::read(uint8_t und)
 {
   return timing() / und / 2; // distance by divisor
 }

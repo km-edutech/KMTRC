@@ -1,10 +1,10 @@
-#include "KMOneCore.h" // Подключение библиотеки робоконтроллера
+#include "KMTRC.h" // Подключение библиотеки робоконтроллера
 
-KMOneCore OneCore; // Инициализация объекта Робоконтроллера "OneCore" для дальнейшего использования его функций
+KMTRC trbot; // Инициализация объекта Робоконтроллера "trbot" для дальнейшего использования его функций
 
 void setup()
 {
-  OneCore.begin(); // Инициализируем Робоконтроллер
+  trbot.begin(); // Инициализируем Робоконтроллер
 }
 
 void loop()
@@ -16,22 +16,22 @@ void loop()
 void mechanumWheelsTest(uint8_t speed, uint16_t delay_time_ms)
 {
   delay(delay_time_ms);
-  OneCore.mecanumMoveForward(speed);  // Задаём движение вперёд
+  trbot.mecanumMoveForward(speed);  // Задаём движение вперёд
   delay(delay_time_ms);
-  OneCore.mecanumMoveBackward(speed); // Задаём движение назад
+  trbot.mecanumMoveBackward(speed); // Задаём движение назад
   delay(delay_time_ms);
-  OneCore.mecanumrotateRight(speed); // Задаём вращение на месте вправо
+  trbot.mecanumrotateRight(speed); // Задаём вращение на месте вправо
   delay(delay_time_ms);
-  OneCore.mecanumrotateLeft(speed); // Задаём вращение на месте влево
+  trbot.mecanumrotateLeft(speed); // Задаём вращение на месте влево
   delay(delay_time_ms);
-  OneCore.mecanumMoveSidewaysRight(speed); // Задаём движение боком вправо
+  trbot.mecanumMoveSidewaysRight(speed); // Задаём движение боком вправо
   delay(delay_time_ms);
-  OneCore.mecanumMoveSidewaysLeft(speed); // Задаём движение боком влево
+  trbot.mecanumMoveSidewaysLeft(speed); // Задаём движение боком влево
   delay(delay_time_ms);
-  OneCore.mecanumMoveRightForward(speed); // Задаём движение вперёд направо под углом 45 градусов
+  trbot.mecanumMoveRightForward(speed); // Задаём движение вперёд направо под углом 45 градусов
   delay(delay_time_ms);
-  OneCore.mecanumMoveLeftForward(speed); // Задаём движение вперёд налево под углом 45 градусов
+  trbot.mecanumMoveLeftForward(speed); // Задаём движение вперёд налево под углом 45 градусов
   delay(delay_time_ms);
-  OneCore.mecanumStopMoving(speed); // Останавливаем движение робота
+  trbot.mecanumStopMoving(speed); // Останавливаем движение робота
   delay(delay_time_ms);
 }

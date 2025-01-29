@@ -128,9 +128,9 @@ enum STEP_TYPE
     HALF_STEP
 };
 
-class KMOneCore
+class KMTRC
 {
-    friend class KMOneCore_PCA9555;
+    friend class KMTRC_PCA9555;
     friend class PCA9685;
 
 private:
@@ -148,8 +148,8 @@ private:
     void setPin(uint8_t pin, bool value);
 
 public:
-    KMOneCore(/* args */);
-    ~KMOneCore();
+    KMTRC(/* args */);
+    ~KMTRC();
 
     void begin(void);
 
@@ -235,9 +235,9 @@ public:
     void readBattreyLevel();
 };
 
-class KMOneCore_Stepper
+class KMTRC_Stepper
 {
-    // friend class KMOneCore;
+    // friend class KMTRC;
 
 private:
     // void stepMotor(int this_step);
@@ -257,9 +257,9 @@ private:
     unsigned long last_step_time; // timestamp in us of when the last step was taken
 
 public:
-    KMOneCore_Stepper(int number_of_steps, int motor_pin_1, int motor_pin_2,
+    KMTRC_Stepper(int number_of_steps, int motor_pin_1, int motor_pin_2,
                            int motor_pin_3, int motor_pin_4);
-    ~KMOneCore_Stepper();
+    ~KMTRC_Stepper();
 
     //------------------------------------------------Steppers-------------------------------------------------------------------------------------------------
 
@@ -270,13 +270,13 @@ public:
     void stepperStep(int number_of_steps);
 };
 
-class KMOneCore_PCA9555
+class KMTRC_PCA9555
 {
     // объявление дружественного класса
-    friend class KMOneCore;
+    friend class KMTRC;
 
 public:
-    KMOneCore_PCA9555(uint8_t address, int interruptPin = -1); // optional interrupt pin in second argument
+    KMTRC_PCA9555(uint8_t address, int interruptPin = -1); // optional interrupt pin in second argument
     void pinMode(uint8_t pin, uint8_t IOMode);                      // pinMode
     uint8_t digitalRead(uint8_t pin);                               // digitalRead
     void digitalWrite(uint8_t pin, uint8_t value);                  // digitalWrite
@@ -324,7 +324,7 @@ private:
 class PCA9685
 {
     // объявление дружественного класса
-    friend class KMOneCore;
+    friend class KMTRC;
 
 public:
 #ifndef PCA9685_ENABLE_SOFTWARE_I2C
@@ -434,7 +434,7 @@ private:
 class PCA9685_ServoEvaluator
 {
     // объявление дружественного класса
-    friend class KMOneCore;
+    friend class KMTRC;
 
 public:
     // Uses a linear interpolation method to quickly compute PWM output value. Uses
@@ -456,13 +456,13 @@ private:
     bool _isCSpline; // Cubic spline tracking, for _coeff length
 };
 
-class KMOneCore_Ultrasonic
+class KMTRC_Ultrasonic
 {
-    friend class KMOneCore;
+    friend class KMTRC;
 
 public:
-    KMOneCore_Ultrasonic(uint8_t sigPin) : KMOneCore_Ultrasonic(sigPin, sigPin) {};
-    KMOneCore_Ultrasonic(uint8_t trigPin, uint8_t echoPin, unsigned long timeOut = 20000UL);
+    KMTRC_Ultrasonic(uint8_t sigPin) : KMTRC_Ultrasonic(sigPin, sigPin) {};
+    KMTRC_Ultrasonic(uint8_t trigPin, uint8_t echoPin, unsigned long timeOut = 20000UL);
     unsigned int read(uint8_t und = CM);
     void setTimeout(unsigned long timeOut) { timeout = timeOut; }
     void setMaxDistance(unsigned long dist) { timeout = dist * CM * 2; }
@@ -500,7 +500,7 @@ typedef void (*enc_isr_cb_t)(void *);
 
 class ESP32Encoder
 {
-    friend class KMOneCore;
+    friend class KMTRC;
 
 public:
     /**
