@@ -1,0 +1,14 @@
+{
+  "name": "KMTRC",
+  "keywords": "communication, robot, control",
+  "description": "Library for KM Edutech TR-Series Robot",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/km-edutech/KMTRC.git"
+  },
+  "version": "0.0.3",
+  "frameworks": "arduino",
+  "platforms": ["espressif32"],
+  "headers": "KMTRC.h"
+}
