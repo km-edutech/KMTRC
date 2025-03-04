@@ -7,18 +7,6 @@
 #include <driver/pcnt.h>
 #include "esp_log.h"
 
-// #define I2C_Freq 400000
-// #define SDA_0 32
-// #define SCL_0 33
-// #define MOTOR1_A 2
-// #define MOTOR1_B 3
-// #define MOTOR2_A 1
-// #define MOTOR2_B 4
-// #define MOTOR4_A 0
-// #define MOTOR4_B 6
-// #define MOTOR3_A 5
-// #define MOTOR3_B 7
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // PCA9555 defines
 //
@@ -103,7 +91,7 @@ static uint16_t phaseDistTable[16] = {0, 2048, 1024, 3072, 512, 3584, 1536, 2560
 #define US2TRIGPIN 26
 
 #define WIFI
-#define PCA9685_ENABLE_DEBUG_OUTPUT
+//#define PCA9685_ENABLE_DEBUG_OUTPUT
 #define MOTOR_MAX 100
 #define MOTOR_MIN -100
 
@@ -112,12 +100,14 @@ const uint8_t BACKWARD = 2;
 const uint8_t BRAKE = 3;
 const uint8_t RELEASE = 4;
 
-// const uint8_t rotateRight = 5;
-// const uint8_t rotateLeft = 6;
-// const uint8_t SidewaysRight = 7;
-// const uint8_t SidewaysLeft = 8;
-// const uint8_t RightForward = 9;
-// const uint8_t LeftForward = 10;
+// definitions of KMTRC pins for use arduino funtions
+const int DIO1 = 12;
+const int DIO2 = 13;
+const int DIO3 = 14;
+
+const int ADC1 = 35;
+const int ADC2 = 34;
+const int ADC3 = 33;
 
 #define STEPS 200
 
@@ -547,44 +537,3 @@ private:
     bool direction;
     bool working;
 };
-
-// Для примера функции из библиотеки TETRIX
-
-// PrizmBegin();
-// PrizmEnd();
-
-// setGreenLED(HIGH/LOW);
-// setRedLED(HIGH/LOW);
-
-// setMotorPower(motor#, power);
-// setMotorPowers(power1, power2);
-// setMotorSpeed(motor#, speed);
-// setMotorSpeeds(speed1, speed2);
-// setMotorTarget(motor#, speed, target);
-// setMotorTargets(speed1, target1, speed2, target2);
-// setMotorDegree(motor#, speed, degrees);
-// setMotorDegrees(speed1, degrees1, speed2, degrees2);
-// setMotorInvert(motor#, invert);
-// readMotorBusy(motor#);
-// readMotorCurrent(motor#);
-
-// readEncoderCount(enc#);
-// readEncoderDegrees(enc#);
-// resetEncoder(enc#);
-// resetEncoders();
-
-// readLineSensor(port#);
-
-// readSonicSensorCM(port#);
-// readSonicSensorIN(port#);
-
-// readBatteryVoltage();
-
-// readStartButton();
-
-// setServoSpeed(servo#, speed);
-// setServoSpeeds(speed1, speed2, speed3, speed4, speed5, speed6);
-// setServoPosition(servo#, position);
-// setServoPositions(position1, position2, position3, position4, position5, position6);
-// readServoPosition(servo#);
-// setCRServoState(CRservo#, state);
