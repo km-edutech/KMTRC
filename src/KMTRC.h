@@ -7,30 +7,20 @@
 #include <driver/pcnt.h>
 #include "esp_log.h"
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// PCA9555 defines
-//
+
+// --------------------------------PCA9555 defines----------------------------------
 #define NXP_INPUT 0
 #define NXP_OUTPUT 2
 #define NXP_INVERT 4
 #define NXP_CONFIG 6
 
-#define SINGLE 1
-#define DOUBLE 2
-#define INTERLEAVE 3
-#define MICROSTEP 4
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// PCA9685 defines
-//
+// --------------------------------PCA9685 defines----------------------------------
 #define BUFFER_LENGTH 32
-
 #define PCA9685_MODE_INVRT (byte)0x10        // Inverts polarity of channel output signal
 #define PCA9685_MODE_OUTPUT_ONACK (byte)0x08 // Channel update happens upon ACK (post-set) rather than on STOP (endTransmission)
 #define PCA9685_MODE_OUTPUT_TPOLE (byte)0x04 // Use a totem-pole (push-pull) style output, typical for boards using this chipset
 #define PCA9685_MODE_OUTNE_HIGHZ (byte)0x02  // For active low output enable, sets channel output to high-impedance state
 #define PCA9685_MODE_OUTNE_LOW (byte)0x01    // Similarly, sets channel output to high if in totem-pole mode, otherwise high-impedance state
-
 #define PCA9685_MIN_CHANNEL 0
 #define PCA9685_MAX_CHANNEL 15
 #define PCA9685_CHANNEL_COUNT 16
@@ -71,30 +61,26 @@ typedef enum
 #define PCA9685_SW_RESET (byte)0x06        // Sent to address 0x00 to reset all devices on Wire line
 #define PCA9685_PWM_FULL (uint16_t)0x01000 // Special value for full on/full off LEDx modes
 
+//----------------------------------------------------------------------------------------
+#define WIFI
+
 // To balance the load out in a weaved fashion, we use this offset table to distribute
 // the load on the outputs in a more interleaving fashion than just a simple 16 offset
 // per channel. We can set the off cycle value to be lower than the on cycle, which will
 // put the high edge across the 0-4095 phase cycle range, which is supported by device.
 static uint16_t phaseDistTable[16] = {0, 2048, 1024, 3072, 512, 3584, 1536, 2560, 256, 3840, 1280, 2304, 3328, 768, 2816, 1792};
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Ultrasonic defines
-//
-/*
- * Values of divisors
- */
-#define CM 29
-#define INC 71
-#define USEHOPIN 25
-#define USTRIGPIN 23
-#define US2EHOPIN 27
-#define US2TRIGPIN 26
+// Ultrasonic defines Values of divisors
+const uint8_t CM = 29;
+const uint8_t INC 71;
+const uint8_t USEHOPIN = 25;
+const uint8_t USTRIGPIN = 23;
+const uint8_t US2EHOPIN = 27;
+const uint8_t US2TRIGPIN = 26;
 
-#define WIFI
-//#define PCA9685_ENABLE_DEBUG_OUTPUT
-#define MOTOR_MAX 100
-#define MOTOR_MIN -100
-
+// DC_Motors cotrol constants
+const uint8_t MOTOR_MAX = 100;
+const uint8_t MOTOR_MIN = -100;
 const uint8_t FORWARD = 1;
 const uint8_t BACKWARD = 2;
 const uint8_t BRAKE = 3;
@@ -109,7 +95,12 @@ const int ADC1 = 35;
 const int ADC2 = 34;
 const int ADC3 = 33;
 
-#define STEPS 200
+// Stepper motor control constants
+const uint8_t STEPS = 200;
+const uint8_t SINGLE = 1;
+const uint8_t DOUBLE = 2;
+const uint8_t INTERLEAVE = 3;
+const uint8_t MICROSTEP = 4;
 
 enum STEP_TYPE
 {

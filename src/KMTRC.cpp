@@ -33,11 +33,10 @@ void KMTRC::begin(void)
   {
     delay(10);
   }
-  Serial.println("Serial start");
 
-  // Wire.setClock(400000);
-  // Wire.begin(SDA_0, SCL_0);
-  // Serial.println("Wire start");
+#ifdef ENABLE_DEBUG_OUTPUT
+  Serial.println("Serial start");
+#endif
 
   bool status;
 
@@ -93,14 +92,19 @@ void KMTRC::moveWheel(uint8_t motor, int v)
     DC_Motor(motor, 0, BRAKE);
   }
 
+#ifdef ENABLE_DEBUG_OUTPUT
   Serial.println("Motor move");
+#endif
 }
 
 void KMTRC::DC_Motor(uint8_t num, uint8_t speed, uint8_t action)
 {
   setMotorSpeed(num, speed); // Задаем скорость (1-255)
   runMotor(num, action);     // Запустаем вращение вперед
-  Serial.println("Run");
+
+#ifdef ENABLE_DEBUG_OUTPUT
+  Serial.println("Run dc motor");
+#endif
 }
 
 void KMTRC::setMotorSpeed(uint8_t num, uint8_t speed)
@@ -184,14 +188,13 @@ void KMTRC::runMotor(uint8_t num, uint8_t cmd)
     setPin(IN2pin, LOW); // take low first to avoid 'break'
     setPin(IN1pin, LOW);
 
-    setPin(IN2pin, HIGH); 
+    setPin(IN2pin, HIGH);
     setPin(IN1pin, HIGH);
     break;
   }
 }
 
 //-------------------------------------- Mecanum Wheels move functions-------------------------------------------------------------------------------------------------
-
 void KMTRC::mecanumWheelsDrive(uint8_t speed, uint8_t direction)
 {
   switch (direction)
@@ -203,16 +206,6 @@ void KMTRC::mecanumWheelsDrive(uint8_t speed, uint8_t direction)
 }
 void KMTRC::mecanumMoveForward(uint8_t speed)
 {
-  // digitalWrite(RightFrontFWD, HIGH);
-  // digitalWrite(RightFrontBWD, LOW);
-  // digitalWrite(RightBackFWD, HIGH);
-  // digitalWrite(RightBackBWD, LOW);
-
-  // digitalWrite(LeftFrontFWD, HIGH);
-  // digitalWrite(LeftFrontBWD, LOW);
-  // digitalWrite(LeftBackFWD, HIGH);
-  // digitalWrite(LeftBackBWD, LOW);
-
   DC_Motor(1, speed, FORWARD);
   DC_Motor(4, speed, FORWARD);
 
@@ -222,16 +215,6 @@ void KMTRC::mecanumMoveForward(uint8_t speed)
 
 void KMTRC::mecanumMoveBackward(uint8_t speed)
 {
-  // digitalWrite(RightFrontFWD, LOW);
-  // digitalWrite(RightFrontBWD, HIGH);
-  // digitalWrite(RightBackFWD, LOW);
-  // digitalWrite(RightBackBWD, HIGH);
-
-  // digitalWrite(LeftFrontFWD, LOW);
-  // digitalWrite(LeftFrontBWD, HIGH);
-  // digitalWrite(LeftBackFWD, LOW);
-  // digitalWrite(LeftBackBWD, HIGH);
-
   DC_Motor(1, speed, BACKWARD);
   DC_Motor(4, speed, BACKWARD);
 
@@ -241,16 +224,6 @@ void KMTRC::mecanumMoveBackward(uint8_t speed)
 
 void KMTRC::mecanumrotateRight(uint8_t speed)
 {
-  // digitalWrite(RightFrontFWD, LOW);
-  // digitalWrite(RightFrontBWD, HIGH);
-  // digitalWrite(RightBackFWD, LOW);
-  // digitalWrite(RightBackBWD, HIGH);
-
-  // digitalWrite(LeftFrontFWD, HIGH);
-  // digitalWrite(LeftFrontBWD, LOW);
-  // digitalWrite(LeftBackFWD, HIGH);
-  // digitalWrite(LeftBackBWD, LOW);
-
   DC_Motor(1, speed, BACKWARD);
   DC_Motor(4, speed, BACKWARD);
 
@@ -260,16 +233,6 @@ void KMTRC::mecanumrotateRight(uint8_t speed)
 
 void KMTRC::mecanumrotateLeft(uint8_t speed)
 {
-  // digitalWrite(RightFrontFWD, HIGH);
-  // digitalWrite(RightFrontBWD, LOW);
-  // digitalWrite(RightBackFWD, HIGH);
-  // digitalWrite(RightBackBWD, LOW);
-
-  // digitalWrite(LeftFrontFWD, LOW);
-  // digitalWrite(LeftFrontBWD, HIGH);
-  // digitalWrite(LeftBackFWD, LOW);
-  // digitalWrite(LeftBackBWD, HIGH);
-
   DC_Motor(1, speed, FORWARD);
   DC_Motor(4, speed, FORWARD);
 
@@ -279,16 +242,6 @@ void KMTRC::mecanumrotateLeft(uint8_t speed)
 
 void KMTRC::mecanumMoveSidewaysRight(uint8_t speed)
 {
-  // digitalWrite(RightFrontFWD, LOW);
-  // digitalWrite(RightFrontBWD, HIGH);
-  // digitalWrite(RightBackFWD, HIGH);
-  // digitalWrite(RightBackBWD, LOW);
-
-  // digitalWrite(LeftFrontFWD, HIGH);
-  // digitalWrite(LeftFrontBWD, LOW);
-  // digitalWrite(LeftBackFWD, LOW);
-  // digitalWrite(LeftBackBWD, HIGH);
-
   DC_Motor(1, speed, BACKWARD);
   DC_Motor(4, speed, FORWARD);
 
@@ -298,16 +251,6 @@ void KMTRC::mecanumMoveSidewaysRight(uint8_t speed)
 
 void KMTRC::mecanumMoveSidewaysLeft(uint8_t speed)
 {
-  // digitalWrite(RightFrontFWD, HIGH);
-  // digitalWrite(RightFrontBWD, LOW);
-  // digitalWrite(RightBackFWD, LOW);
-  // digitalWrite(RightBackBWD, HIGH);
-
-  // digitalWrite(LeftFrontFWD, LOW);
-  // digitalWrite(LeftFrontBWD, HIGH);
-  // digitalWrite(LeftBackFWD, HIGH);
-  // digitalWrite(LeftBackBWD, LOW);
-
   DC_Motor(1, speed, FORWARD);
   DC_Motor(4, speed, BACKWARD);
 
@@ -317,16 +260,6 @@ void KMTRC::mecanumMoveSidewaysLeft(uint8_t speed)
 
 void KMTRC::mecanumMoveRightForward(uint8_t speed)
 {
-  // digitalWrite(RightFrontFWD, LOW);
-  // digitalWrite(RightFrontBWD, LOW);
-  // digitalWrite(RightBackFWD, HIGH);
-  // digitalWrite(RightBackBWD, LOW);
-
-  // digitalWrite(LeftFrontFWD, HIGH);
-  // digitalWrite(LeftFrontBWD, LOW);
-  // digitalWrite(LeftBackFWD, LOW);
-  // digitalWrite(LeftBackBWD, LOW);
-
   DC_Motor(1, speed, RELEASE);
   DC_Motor(4, speed, FORWARD);
 
@@ -336,16 +269,6 @@ void KMTRC::mecanumMoveRightForward(uint8_t speed)
 
 void KMTRC::mecanumMoveLeftForward(uint8_t speed)
 {
-  // digitalWrite(RightFrontFWD, HIGH);
-  // digitalWrite(RightFrontBWD, LOW);
-  // digitalWrite(RightBackFWD, LOW);
-  // digitalWrite(RightBackBWD, LOW);
-
-  // digitalWrite(LeftFrontFWD, LOW);
-  // digitalWrite(LeftFrontBWD, LOW);
-  // digitalWrite(LeftBackFWD, HIGH);
-  // digitalWrite(LeftBackBWD, LOW);
-
   DC_Motor(1, speed, FORWARD);
   DC_Motor(4, speed, RELEASE);
 
@@ -355,16 +278,6 @@ void KMTRC::mecanumMoveLeftForward(uint8_t speed)
 
 void KMTRC::mecanumStopMoving(uint8_t speed)
 {
-  // digitalWrite(RightFrontFWD, LOW);
-  // digitalWrite(RightFrontBWD, LOW);
-  // digitalWrite(RightBackFWD, LOW);
-  // digitalWrite(RightBackBWD, LOW);
-
-  // digitalWrite(LeftFrontFWD, LOW);
-  // digitalWrite(LeftFrontBWD, LOW);
-  // digitalWrite(LeftBackFWD, LOW);
-  // digitalWrite(LeftBackBWD, LOW);
-
   DC_Motor(1, speed, RELEASE);
   DC_Motor(4, speed, RELEASE);
 
@@ -373,24 +286,12 @@ void KMTRC::mecanumStopMoving(uint8_t speed)
 }
 
 //----------------------------------------------Analog Servos-------------------------------------------------------------------------------------------------
-
 void KMTRC::setAnalogServoAngle(uint8_t num, uint8_t angle)
 {
-  //  pwmControl.setPWMFrequency(50.0f);
-  //  PCA9685_ServoEvaluator pwmServo1;
-  //  PCA9685_ServoEvaluator pwmServo1(50,152,334);
-  //  PCA9685_ServoEvaluator pwmServo1(102,307,534);
   PCA9685_ServoEvaluator pwmServo1(102, 512);
-  // PCA9685_ServoEvaluator pwmServo1(4000,0,0);
-  //   PCA9685_ServoEvaluator pwmServo2(0,300,800);
   PCA9685_ServoEvaluator pwmServo2(102, 512);
-  //  PCA9685_ServoEvaluator pwmServo2(50,150,500);
-  // PCA9685_ServoEvaluator pwmServo3(100,200,600);
-  //  PCA9685_ServoEvaluator pwmServo3(50,100,800);
   PCA9685_ServoEvaluator pwmServo3(102, 512);
-  // PCA9685_ServoEvaluator pwmServo4(0, 500,1200);
   PCA9685_ServoEvaluator pwmServo4(102, 512);
-  //	PCA9685_ServoEvaluator pwmServo4(0,400,900);
   PCA9685_ServoEvaluator pwmServo5(102, 512);
   PCA9685_ServoEvaluator pwmServo6(102, 512);
 
@@ -421,20 +322,6 @@ void KMTRC::setAnalogServoAngle(uint8_t num, uint8_t angle)
 
 //------------------------------------------------Steppers-------------------------------------------------------------------------------------------------
 
-// void KMTRC::setStepper(int stepper_num, int stepper_speed, int steps)
-// {
-//   if (stepper_num == 1)
-//   {
-//     stepper1.setStepperSpeed(stepper_speed);
-//     stepper1.stepperStep(steps);
-//   }
-//   else if (stepper_num == 2)
-//   {
-//     stepper2.setStepperSpeed(stepper_speed);
-//     stepper2.stepperStep(steps);
-//   }
-// }
-
 void KMTRC::setStepperSpeed(int stepper_num, int stepper_speed)
 {
   if (stepper_num == 1)
@@ -464,7 +351,7 @@ void KMTRC::setStepperStep(int stepper_num, int steps)
  *   Sets which wires should control the motor.
  */
 KMTRC_Stepper::KMTRC_Stepper(int number_of_steps, int motor_pin_1, int motor_pin_2,
-                                               int motor_pin_3, int motor_pin_4)
+                             int motor_pin_3, int motor_pin_4)
 {
   this->step_number = 0;                   // which step the motor is on
   this->direction = 0;                     // motor direction
@@ -551,38 +438,6 @@ void KMTRC_Stepper::stepperStep(int steps_to_move)
 /*
  * Moves the motor forward or backwards.
  */
-// void KMTRC_Stepper::stepMotor(int thisStep)
-// {
-//   switch (thisStep)
-//   {
-//   case 0: // 1010
-//     io_expand.digitalWrite(motor_pin_1, HIGH);
-//     io_expand.digitalWrite(motor_pin_2, LOW);
-//     io_expand.digitalWrite(motor_pin_3, HIGH);
-//     io_expand.digitalWrite(motor_pin_4, LOW);
-//     break;
-//   case 1: // 0110
-//     io_expand.digitalWrite(motor_pin_1, LOW);
-//     io_expand.digitalWrite(motor_pin_2, HIGH);
-//     io_expand.digitalWrite(motor_pin_3, HIGH);
-//     io_expand.digitalWrite(motor_pin_4, LOW);
-//     break;
-//   case 2: // 0101
-//     io_expand.digitalWrite(motor_pin_1, LOW);
-//     io_expand.digitalWrite(motor_pin_2, HIGH);
-//     io_expand.digitalWrite(motor_pin_3, LOW);
-//     io_expand.digitalWrite(motor_pin_4, HIGH);
-//     break;
-//   case 3: // 1001
-//     io_expand.digitalWrite(motor_pin_1, HIGH);
-//     io_expand.digitalWrite(motor_pin_2, LOW);
-//     io_expand.digitalWrite(motor_pin_3, LOW);
-//     io_expand.digitalWrite(motor_pin_4, HIGH);
-//     break;
-//   }
-//   // delay(10);
-// }
-
 // Alternate stepper motor function for our nema17 stepper motor
 void KMTRC_Stepper::stepMotorALT(int thisStep)
 {
@@ -1373,10 +1228,10 @@ void PCA9685::setPWMFrequency(float pwmFrequency)
     preScalerVal = 255;
   if (preScalerVal < 3)
     preScalerVal = 3;
-    //  Serial.print("PCA9685::setPWMFrequency pwmFrequency: ");
-    //  Serial.print(pwmFrequency);
-    //  Serial.print(", preScalerVal: 0x");
-    //  Serial.println(preScalerVal, HEX);
+  //  Serial.print("PCA9685::setPWMFrequency pwmFrequency: ");
+  //  Serial.print(pwmFrequency);
+  //  Serial.print(", preScalerVal: 0x");
+  //  Serial.println(preScalerVal, HEX);
 
 #ifdef PCA9685_ENABLE_DEBUG_OUTPUT
   Serial.print("PCA9685::setPWMFrequency pwmFrequency: ");
