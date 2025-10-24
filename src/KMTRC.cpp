@@ -286,7 +286,7 @@ void KMTRC::mecanumStopMoving(uint8_t speed)
 }
 
 //----------------------------------------------Analog Servos-------------------------------------------------------------------------------------------------
-void KMTRC::setAnalogServoAngle(uint8_t num, uint8_t angle)
+void KMTRC::setAnalogServoAngle(uint8_t num, uint16_t angle)
 {
   PCA9685_ServoEvaluator pwmServo1(102, 512);
   PCA9685_ServoEvaluator pwmServo2(102, 512);

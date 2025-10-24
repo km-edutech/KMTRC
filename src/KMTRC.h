@@ -72,7 +72,7 @@ static uint16_t phaseDistTable[16] = {0, 2048, 1024, 3072, 512, 3584, 1536, 2560
 
 // Ultrasonic defines Values of divisors
 const uint8_t CM = 29;
-const uint8_t INC 71;
+const uint8_t INC =71;
 const uint8_t USEHOPIN = 25;
 const uint8_t USTRIGPIN = 23;
 const uint8_t US2EHOPIN = 27;
@@ -179,7 +179,7 @@ public:
      * @p num - номер сервопривода
      * @p angle - угол поворота сервопривода
      */
-    void setAnalogServoAngle(uint8_t num, uint8_t angle);
+    void setAnalogServoAngle(uint8_t num, uint16_t angle);
 
     //------------------------------------------------Steppers-------------------------------------------------------------------------------------------------
 
