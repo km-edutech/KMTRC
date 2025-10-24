@@ -7,7 +7,6 @@
 #include <driver/pcnt.h>
 #include "esp_log.h"
 
-
 // --------------------------------PCA9555 defines----------------------------------
 #define NXP_INPUT 0
 #define NXP_OUTPUT 2
@@ -71,20 +70,20 @@ typedef enum
 static uint16_t phaseDistTable[16] = {0, 2048, 1024, 3072, 512, 3584, 1536, 2560, 256, 3840, 1280, 2304, 3328, 768, 2816, 1792};
 
 // Ultrasonic defines Values of divisors
-const uint8_t CM = 29;
-const uint8_t INC =71;
-const uint8_t USEHOPIN = 25;
-const uint8_t USTRIGPIN = 23;
-const uint8_t US2EHOPIN = 27;
-const uint8_t US2TRIGPIN = 26;
+const int CM = 29;
+const int INC = 71;
+const int USEHOPIN = 25;
+const int USTRIGPIN = 23;
+const int US2EHOPIN = 27;
+const int US2TRIGPIN = 26;
 
 // DC_Motors cotrol constants
-const uint8_t MOTOR_MAX = 100;
-const uint8_t MOTOR_MIN = -100;
-const uint8_t FORWARD = 1;
-const uint8_t BACKWARD = 2;
-const uint8_t BRAKE = 3;
-const uint8_t RELEASE = 4;
+const int MOTOR_MAX = 100;
+const int MOTOR_MIN = -100;
+const int FORWARD = 1;
+const int BACKWARD = 2;
+const int BRAKE = 3;
+const int RELEASE = 4;
 
 // definitions of KMTRC pins for use arduino funtions
 const int DIO1 = 12;
@@ -96,11 +95,11 @@ const int ADC2 = 34;
 const int ADC3 = 33;
 
 // Stepper motor control constants
-const uint8_t STEPS = 200;
-const uint8_t SINGLE = 1;
-const uint8_t DOUBLE = 2;
-const uint8_t INTERLEAVE = 3;
-const uint8_t MICROSTEP = 4;
+const int STEPS = 200;
+const int SINGLE = 1;
+const int DOUBLE = 2;
+const int INTERLEAVE = 3;
+const int MICROSTEP = 4;
 
 enum STEP_TYPE
 {
